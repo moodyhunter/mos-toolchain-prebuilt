@@ -11,6 +11,7 @@ env:
   GCC_VERSION: 12.2.0
   BINUTILS_VERSION: 2.39
   PREFIX: "/tmp/toolchain"
+  MAKEFLAGS: "-j2"
 
 jobs:
   build:
