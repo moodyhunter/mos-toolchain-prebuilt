@@ -23,9 +23,6 @@ cd $THIS_DIR/_work
 
 # Downloads
 
-test -f binutils-$BINUTILS_VERSION.tar.xz || wget https://ftp.gnu.org/gnu/binutils/binutils-$BINUTILS_VERSION.tar.xz
-test -f gcc-$GCC_VERSION.tar.xz || wget https://ftp.gnu.org/gnu/gcc/gcc-$GCC_VERSION/gcc-$GCC_VERSION.tar.xz
-
 # remove old work dirs
 test -d binutils-$BINUTILS_VERSION && rm -rf binutils-$BINUTILS_VERSION
 test -d binutils-build && rm -rf binutils-build
