@@ -10,11 +10,14 @@ on:
 env:
   GCC_VERSION: 12.2.0
   BINUTILS_VERSION: 2.39
-  TARGET_TRIPLE: i686-elf
   PREFIX: "/tmp/toolchain"
 
 jobs:
   build:
+    strategy:
+      matrix:
+        target_triple: [i686-elf, x86_64-elf]
+      fail-fast: false
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -29,11 +32,11 @@ jobs:
           wget https://ftp.gnu.org/gnu/binutils/binutils-${BINUTILS_VERSION}.tar.gz
           tar -xvf binutils-${BINUTILS_VERSION}.tar.gz
 
-      - name: Build ${{ env.TARGET_TRIPLE }}-binutils
+      - name: Build ${{ matrix.target_triple }}-binutils
         run: |
           mkdir build-binutils
           cd build-binutils
-          ../binutils-${BINUTILS_VERSION}/configure --target=${{ env.TARGET_TRIPLE }} --prefix="${{ env.PREFIX }}" --with-sysroot --disable-nls --disable-werror
+          ../binutils-${BINUTILS_VERSION}/configure --target=${{ matrix.target_triple }} --prefix=${PREFIX} --with-sysroot --disable-nls --disable-werror
           make
           make install
 
@@ -42,11 +45,11 @@ jobs:
           wget https://ftp.gnu.org/gnu/gcc/gcc-${GCC_VERSION}/gcc-${GCC_VERSION}.tar.gz
           tar -xvf gcc-${GCC_VERSION}.tar.gz
 
-      - name: Build ${{ env.TARGET_TRIPLE }}-gcc
+      - name: Build ${{ matrix.target_triple }}-gcc
         run: |
           mkdir build-gcc
           cd build-gcc
-          ../gcc-${GCC_VERSION}/configure --target=${{ env.TARGET_TRIPLE }} --prefix="${{ env.PREFIX }}" --disable-nls --enable-languages=c,c++ --without-headers
+          ../gcc-${GCC_VERSION}/configure --target=${{ matrix.target_triple }} --prefix=${PREFIX} --disable-nls --enable-languages=c,c++ --without-headers
           make all-gcc
           make all-target-libgcc
           make install-gcc
@@ -55,11 +58,12 @@ jobs:
       - name: Package
         run: |
           cd /tmp
-          tar -czf i686-elf.tar.gz toolchains
+          tar -czvf toolchain-${{ matrix.target_triple }}.tar.gz toolchain
 
       - name: Upload to release
         uses: svenstaro/upload-release-action@v2
         with:
-          file: /tmp/i686-elf.tar.gz
+          file: /tmp/toolchain-${{ matrix.target_triple }}.tar.gz
           tag: artifact
           overwrite: true
+          file_glob: true
