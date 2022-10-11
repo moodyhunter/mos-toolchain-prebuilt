@@ -10,8 +10,7 @@ set -e
 # Exports
 export THIS_DIR=$(pwd)
 export TARGET=i686-elf
-export PREFIX="$THIS_DIR/toolchains/$TARGET"
-export PATH="$PREFIX/bin:$PATH"
+export PREFIX="/tmp/toolchains/$TARGET"
 
 export BINUTILS_VERSION=2.39
 export GCC_VERSION=12.2.0
@@ -19,8 +18,8 @@ export GCC_VERSION=12.2.0
 export PARALLELISM=$(nproc)
 export MAKEFLAGS="-j$PARALLELISM"
 
-mkdir -p $PREFIX/_work
-cd $PREFIX/_work
+mkdir -p $THIS_DIR/_work
+cd $THIS_DIR/_work
 
 # Downloads
 
@@ -68,10 +67,3 @@ make all-target-libgcc
 make install-gcc
 make install-target-libgcc
 cd ..
-
-# # "Perma" Export
-# echo "# CROSS-COMPILER STUFF" >>~/.bashrc
-# echo "export PREFIX="$HOME/Toolchain/i686-elf" " >>~/.bashrc
-# echo "export TARGET=i686-elf" >>/.bashrc
-# echo "export PATH="$PREFIX/bin:$PATH" " >>~/.bashrc
-# echo "export TOOLCHAIN="$HOME/Toolchain/i686-elf" " >>~/.bashrc
