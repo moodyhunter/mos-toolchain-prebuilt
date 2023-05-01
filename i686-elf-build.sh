@@ -12,8 +12,8 @@ export THIS_DIR=$(pwd)
 export TARGET=i686-elf
 export PREFIX="/tmp/toolchains/$TARGET"
 
-export BINUTILS_VERSION=2.39
-export GCC_VERSION=12.2.0
+export BINUTILS_VERSION=2.40
+export GCC_VERSION=13.1.0
 
 export PARALLELISM=$(nproc)
 export MAKEFLAGS="-j$PARALLELISM"
