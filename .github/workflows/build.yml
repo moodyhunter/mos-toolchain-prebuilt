@@ -8,8 +8,8 @@ on:
   workflow_dispatch:
 
 env:
-  GCC_VERSION: 12.2.0
-  BINUTILS_VERSION: 2.39
+  GCC_VERSION: 13.1.0
+  BINUTILS_VERSION: 2.40
   PREFIX: "/tmp/toolchain"
   MAKEFLAGS: "-j2"
 
