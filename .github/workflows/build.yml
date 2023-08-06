@@ -8,8 +8,8 @@ on:
   workflow_dispatch:
 
 env:
-  GCC_VERSION: "13.1.0"
-  BINUTILS_VERSION: "2.40"
+  GCC_VERSION: "13.2.0"
+  BINUTILS_VERSION: "2.41"
   PREFIX: "/tmp/toolchain"
   MAKEFLAGS: "-j2"
 
@@ -17,7 +17,7 @@ jobs:
   build:
     strategy:
       matrix:
-        target_triple: [i686-elf, x86_64-elf]
+        target_triple: [x86_64-elf]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
