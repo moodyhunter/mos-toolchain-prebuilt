@@ -1,0 +1,16 @@
+name: Build Packages
+
+on:
+  push:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: archlinux:latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+
+      - name: Install and Start tmate
+        uses: mxschmitt/action-tmate@v2
