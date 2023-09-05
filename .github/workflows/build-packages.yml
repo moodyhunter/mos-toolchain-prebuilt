@@ -18,4 +18,6 @@ jobs:
           submodules: true
 
       - name: Install and Start tmate
-        uses: mxschmitt/action-tmate@v2
+        run: |
+          pacman -S --noconfirm tmate
+          tmate -F
