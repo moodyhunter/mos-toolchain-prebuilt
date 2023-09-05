@@ -8,6 +8,11 @@ jobs:
     runs-on: ubuntu-latest
     container: archlinux:latest
     steps:
+      - name: Update Package Cache
+        run: |
+          pacman -Syu --noconfirm
+          pacman -S --noconfirm git base-devel
+
       - uses: actions/checkout@v2
         with:
           submodules: true
