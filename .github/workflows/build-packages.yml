@@ -31,7 +31,7 @@ jobs:
 
       - name: Install Package(s)
         run: |
-          script=./${{ fromJSON('["bootstrap", "build"]')[github.event.inputs.full_bootstrap == 'false'] }}.sh
+          script=./${{ fromJSON('["bootstrap", "build"]')[github.event.inputs.full_bootstrap == 'false'] }}-package.sh
           echo "Invoking $script ${{ github.event.inputs.package }}"
           $script ${{ github.event.inputs.package }}
 
