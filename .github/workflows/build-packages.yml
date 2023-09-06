@@ -7,24 +7,27 @@ on:
         description: "Package to build"
         required: true
       full_bootstrap:
-        description: "Full bootstrap"
-        required: false
-        default: "false"
+        type: boolean
+        description: "Perform a full bootstrap"
+        required: true
+        default: false
 
 jobs:
   build:
     runs-on: ubuntu-latest
     container: archlinux:latest
+    name: ${{ fromJSON('["Bootstrap", "Build"]')[github.event.inputs.full_bootstrap == 'true'] }} ${{ github.event.inputs.package }}
     steps:
       - name: Update Package Cache
         run: |
           pacman -Syu --noconfirm
-          pacman -S --noconfirm git base-devel
+          pacman -S --noconfirm git base-devel python
           sed -i '/E_ROOT/d' /usr/bin/makepkg
 
       - uses: actions/checkout@v2
         with:
           submodules: true
+          repository: "moodyhunter/mos-packages"
 
       - name: Install and Start tmate
         run: |
