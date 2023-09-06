@@ -16,7 +16,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     container: archlinux:latest
-    name: ${{ fromJSON('["Bootstrap", "Build"]')[github.event.inputs.full_bootstrap == 'true'] }} ${{ github.event.inputs.package }}
+    name: ${{ fromJSON('["Bootstrap", "Build"]')[github.event.inputs.full_bootstrap == 'false'] }} ${{ github.event.inputs.package }}
     steps:
       - name: Update Package Cache
         run: |
