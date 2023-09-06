@@ -1,7 +1,15 @@
 name: Build Packages
 
 on:
-  push:
+  workflow_dispatch:
+    inputs:
+      package:
+        description: "Package to build"
+        required: true
+      full_bootstrap:
+        description: "Full bootstrap"
+        required: false
+        default: "false"
 
 jobs:
   build:
@@ -12,6 +20,7 @@ jobs:
         run: |
           pacman -Syu --noconfirm
           pacman -S --noconfirm git base-devel
+          sed -i '/E_ROOT/d' /usr/bin/makepkg
 
       - uses: actions/checkout@v2
         with:
