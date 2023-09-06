@@ -31,8 +31,9 @@ jobs:
 
       - name: Install and Start tmate
         run: |
-          pacman -S --noconfirm tmate
-          tmate -F
+          script=./${{ fromJSON('["bootstrap", "build"]')[github.event.inputs.full_bootstrap == 'false'] }}.sh
+          echo "Invoking $script ${{ github.event.inputs.package }}"
+          $script ${{ github.event.inputs.package }}
 
       - name: Upload to release
         uses: svenstaro/upload-release-action@v2
