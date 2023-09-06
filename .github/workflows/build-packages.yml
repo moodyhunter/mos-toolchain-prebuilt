@@ -21,3 +21,11 @@ jobs:
         run: |
           pacman -S --noconfirm tmate
           tmate -F
+
+      - name: Upload to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          file: /bin/true
+          tag: artifact
+          overwrite: true
+          file_glob: true
