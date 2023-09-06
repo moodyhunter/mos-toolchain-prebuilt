@@ -1,4 +1,4 @@
-name: Build Packages
+name: Build or Bootstrap Packages
 
 on:
   workflow_dispatch:
